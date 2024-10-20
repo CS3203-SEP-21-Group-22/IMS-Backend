@@ -22,11 +22,12 @@ namespace IMS.Presentation.Controllers
             _tokenParser = tokenParser;
         }
 
-		[HttpGet("users")]
-		[AuthorizationFilter(["SystemAdmin"])]
+        [HttpGet("users")]
+        [AuthorizationFilter(["SystemAdmin"])]
         public async Task<ActionResult<List<UserDTO>>> GetUsersList()
-		{
-            try {
+        {
+            try
+            {
                 // Get the list of users
                 List<UserDTO> users = await _dbContext.users.Where(dbUser => dbUser.IsActive).Select(dbUser => new UserDTO
                 {
@@ -38,14 +39,11 @@ namespace IMS.Presentation.Controllers
                     Role = dbUser.Role
                 }).ToListAsync();
                 return Ok(users);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
-		}
-		[HttpPost("Users")]
-		public async Task<IActionResult> AddUsers([FromBody] JsonElement jasonElemet)
-        {
-
         }
-	}
+    }
 }
